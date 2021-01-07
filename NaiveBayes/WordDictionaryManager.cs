@@ -6,34 +6,37 @@ namespace NaiveBayes
 {
     public class WordDictionaryManager
     {
-        private LoadSaveWordDictionary loadSaveJson = new LoadSaveWordDictionary();
+        private LoadSaveJson loadSaveJson = new LoadSaveJson();
         private TextFileReader textFileReader = new TextFileReader();
+
+        private string Filename { get; } = "worddictionary.json";
 
         public WordDictionary BuildDictionary()
         {
             WordDictionary wordDictionary = new WordDictionary();
-            List<string> text = textFileReader.ReadFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "res", "TrainingData", "alt.atheism", "53154"));
+            // TODO: read all files
+            List<string> text = textFileReader.ReadFile(Path.Combine(Program.myPath, "res", "TrainingData", "atheism", "53154"));
             AddText(text, wordDictionary);
+            StoreDictionary(wordDictionary);
 
             return wordDictionary;
         }
 
         public WordDictionary LoadDictionary()
         {
-            if (!File.Exists(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "res", "worddictionary.json")))
+            if (!File.Exists(Path.Combine(Program.myPath, "res", Filename)))
             {
                 throw new FileNotFoundException("Dictionary has to be build first");
             }
 
-            WordDictionary wordDictionary = new WordDictionary();
-            wordDictionary.Words = loadSaveJson.Deserialize();
+            WordDictionary wordDictionary = loadSaveJson.Deserialize<WordDictionary>(Filename);
 
             return wordDictionary;
         }
 
         public void StoreDictionary(WordDictionary wordDictionary)
         {
-            loadSaveJson.Serialize(wordDictionary.Words);
+            loadSaveJson.Serialize(wordDictionary, Filename);
         }
 
         private void AddText(List<string> text, WordDictionary wordDictionary)

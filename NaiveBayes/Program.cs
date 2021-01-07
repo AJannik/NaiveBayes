@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 
 namespace NaiveBayes
 {
@@ -19,7 +21,16 @@ namespace NaiveBayes
 
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            TextFileReader textFileReader = new TextFileReader();
+            WordDictionary wordDictionary = new WordDictionary();
+
+            List<string> text = textFileReader.ReadFile(Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..", "res", "TrainingData", "alt.atheism", "53154"));
+            wordDictionary.AddText(text);
+
+            foreach (string word in wordDictionary.words)
+            {
+                Console.WriteLine(word);
+            }
         }
     }
 }

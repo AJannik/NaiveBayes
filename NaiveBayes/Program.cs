@@ -19,6 +19,8 @@ namespace NaiveBayes
         // TODO: Absolute Häufigkeit der eingeteilten Klasse aktualisieren
         // TODO: Absolute Häufigkeiten der unbekannten Worter für jede Klasse hinzufügen
 
+        public static string myPath = Path.Combine(Directory.GetCurrentDirectory(), "..", "..", "..");
+
         static void Main(string[] args)
         {
             Controll controll = new Controll();

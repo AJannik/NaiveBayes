@@ -7,7 +7,6 @@
 
   <ItemGroup>
     <Folder Include="res\TestData\" />
-    <Folder Include="res\TrainingData\" />
   </ItemGroup>
 
 </Project>

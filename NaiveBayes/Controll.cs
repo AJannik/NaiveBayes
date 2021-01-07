@@ -8,7 +8,11 @@ namespace NaiveBayes
     {
         private WordDictionary WordDictionary { get; set; }
 
+        private NumClasses NumClasses { get; set; }
+
         private WordDictionaryManager WordDictionaryManager { get; } = new WordDictionaryManager();
+
+        private NumClassesManager NumClassesManager { get; } = new NumClassesManager();
 
         public bool ReBuildDictionary { get; } = false;
 
@@ -17,10 +21,12 @@ namespace NaiveBayes
             if (ReBuildDictionary)
             {
                 WordDictionary = WordDictionaryManager.BuildDictionary();
+                NumClasses = NumClassesManager.BuildNumClasses();
             }
             else
             {
                 WordDictionary = WordDictionaryManager.LoadDictionary();
+                NumClasses = NumClassesManager.LoadNumClasses();
             }
         }
 

@@ -34,6 +34,7 @@ namespace NaiveBayes
             numClasses.space = Directory.GetFiles(Path.Combine(Program.myPath, "res", "TrainingData", "space")).Length;
             numClasses.windowsOS = Directory.GetFiles(Path.Combine(Program.myPath, "res", "TrainingData", "windowsOS")).Length;
             numClasses.windowsX = Directory.GetFiles(Path.Combine(Program.myPath, "res", "TrainingData", "windowsX")).Length;
+            StoreNumClasses(numClasses);
 
             return numClasses;
         }

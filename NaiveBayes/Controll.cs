@@ -49,7 +49,11 @@ namespace NaiveBayes
 
         public void Classify()
         {
+            Classification classification = new Classification();
+
             TestDataManager.BuildTestDatas(WordDictionary);
+            classification.CalculateProbabilities(NumClasses, classNames, ClassHits.ToArray());
+            classification.Classify(TestDataManager.TestDatas[0], classNames);
         }
 
         public void PrintDictionary()

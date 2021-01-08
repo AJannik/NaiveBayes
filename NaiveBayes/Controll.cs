@@ -8,7 +8,7 @@ namespace NaiveBayes
     {
         private WordDictionary WordDictionary { get; set; }
 
-        private NumClasses NumClasses { get; set; }
+        private NumTrainingDataClasses NumClasses { get; set; }
 
         private List<ClassHits> ClassHits { get; set; } = new List<ClassHits>();
 
@@ -20,7 +20,7 @@ namespace NaiveBayes
 
         private TestDataManager TestDataManager { get; } = new TestDataManager();
 
-        private readonly string[] classes = {"atheism", "autos", "baseball", "christian", "crypt", "electronics", "forsale", "graphics", 
+        private readonly string[] classNames = {"atheism", "autos", "baseball", "christian", "crypt", "electronics", "forsale", "graphics", 
             "guns", "hockey", "macHardware", "medicine", "mideast", "motorcycles", "pcHardware", "politicsMisc", "religionMisc", "space", "windowsOS", "windowsX"};
 
         public bool ReBuildDictionary { get; } = false;
@@ -29,9 +29,9 @@ namespace NaiveBayes
         {
             if (ReBuildDictionary)
             {
-                WordDictionary = WordDictionaryManager.BuildDictionary(classes);
-                NumClasses = NumClassesManager.BuildNumClasses();
-                foreach (string item in classes)
+                WordDictionary = WordDictionaryManager.BuildDictionary(classNames);
+                NumClasses = NumClassesManager.BuildNumClasses(classNames);
+                foreach (string item in classNames)
                 {
                     ClassHits.Add(ClassHitsManager.BuildClassHits(item, WordDictionary));
                 }
@@ -40,7 +40,7 @@ namespace NaiveBayes
             {
                 WordDictionary = WordDictionaryManager.LoadDictionary();
                 NumClasses = NumClassesManager.LoadNumClasses();
-                foreach (string item in classes)
+                foreach (string item in classNames)
                 {
                     ClassHits.Add(ClassHitsManager.LoadClassHits(item));
                 }

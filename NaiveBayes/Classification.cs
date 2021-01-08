@@ -14,10 +14,11 @@ namespace NaiveBayes
         {
             float[] results = new float[20];
             int maxIndex = 0;
-            float maxProb = 0f;
+            float maxProb = -9999999999f;
             for (int i = 0; i < results.Length; i++)
             {
-                results[i] = c * Probabilities[i].ClassProbability * WordsProbability(testData, i);
+                results[i] = MathF.Log(c) + MathF.Log(Probabilities[i].ClassProbability) + WordsProbability(testData, i);
+                Console.WriteLine($"Class: {classNames[i]}; Score: {results[i]}");
                 if (maxProb < results[i])
                 {
                     maxProb = results[i];
@@ -33,8 +34,11 @@ namespace NaiveBayes
         {
             for (int i = 0; i < Probabilities.Length; i++)
             {
-                Probabilities[i].ClassName = classesName[i];
-                Probabilities[i].ClassProbability = numTrainingDataClasses.NumTrainingData[i] / (float)numTrainingDataClasses.TotalNumTrainingData;
+                Probability probability = new Probability();
+                probability.WordsProbabilities = new float[classHits[0].Hits.Length];
+                probability.ClassName = classesName[i];
+                probability.ClassProbability = numTrainingDataClasses.NumTrainingData[i] / (float)numTrainingDataClasses.TotalNumTrainingData;
+                Probabilities[i] = probability;
 
                 for (int j = 0; j < classHits[i].Hits.Length; j++)
                 {
@@ -45,10 +49,13 @@ namespace NaiveBayes
 
         private float WordsProbability(TestData testData, int index)
         {
-            float prob = 1f;
+            float prob = 0f;
             for (int i = 0; i < testData.Hits.Length; i++)
             {
-                prob *= testData.Hits[i] * Probabilities[index].WordsProbabilities[i];
+                if (Probabilities[index].WordsProbabilities[i] != 0f)
+                {
+                    prob += testData.Hits[i] * MathF.Log(Probabilities[index].WordsProbabilities[i]);
+                }
             }
 
             return prob;

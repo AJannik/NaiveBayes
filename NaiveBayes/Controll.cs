@@ -53,7 +53,10 @@ namespace NaiveBayes
 
             TestDataManager.BuildTestDatas(WordDictionary);
             classification.CalculateProbabilities(NumClasses, classNames, ClassHits.ToArray());
-            classification.Classify(TestDataManager.TestDatas[0], classNames);
+            for (int i = 0; i < TestDataManager.TestDatas.Count; i++)
+            {
+                classification.Classify(TestDataManager.TestDatas[i], classNames);
+            }
         }
 
         public void PrintDictionary()

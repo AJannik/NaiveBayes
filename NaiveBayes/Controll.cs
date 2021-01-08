@@ -18,6 +18,9 @@ namespace NaiveBayes
 
         private ClassHitsManager ClassHitsManager { get; } = new ClassHitsManager();
 
+        private string[] classes = {"atheism", "autos", "baseball", "christian", "crypt", "electronics", "forsale", "graphics", 
+            "guns", "hockey", "macHardware", "medicine", "mideast", "motorcycles", "pcHardware", "politicsMisc", "religionMisc", "space", "windowsOS", "windowsX"};
+
         public bool ReBuildDictionary { get; } = true;
 
         public void Setup()
@@ -26,13 +29,19 @@ namespace NaiveBayes
             {
                 WordDictionary = WordDictionaryManager.BuildDictionary();
                 NumClasses = NumClassesManager.BuildNumClasses();
-                classHits.Add(ClassHitsManager.BuildClassHits("atheism", WordDictionary));
+                foreach (string item in classes)
+                {
+                    classHits.Add(ClassHitsManager.BuildClassHits(item, WordDictionary));
+                }
             }
             else
             {
                 WordDictionary = WordDictionaryManager.LoadDictionary();
                 NumClasses = NumClassesManager.LoadNumClasses();
-                classHits.Add(ClassHitsManager.LoadClassHits("atheism"));
+                foreach (string item in classes)
+                {
+                    classHits.Add(ClassHitsManager.LoadClassHits(item));
+                }
             }
         }
 

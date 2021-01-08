@@ -32,7 +32,6 @@ namespace NaiveBayes
             }
 
             StoreClassHits(classHits);
-
             return classHits;
         }
 

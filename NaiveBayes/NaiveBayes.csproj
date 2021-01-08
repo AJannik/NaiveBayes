@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="res\LearnedData\" />
     <Folder Include="res\TestData\" />
   </ItemGroup>
 

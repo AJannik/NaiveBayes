@@ -6,7 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="res\ClassHits\" />
     <Folder Include="res\TestData\" />
   </ItemGroup>
 

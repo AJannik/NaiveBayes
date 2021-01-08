@@ -10,11 +10,15 @@ namespace NaiveBayes
 
         private NumClasses NumClasses { get; set; }
 
+        private List<ClassHits> classHits { get; set; } = new List<ClassHits>();
+
         private WordDictionaryManager WordDictionaryManager { get; } = new WordDictionaryManager();
 
         private NumClassesManager NumClassesManager { get; } = new NumClassesManager();
 
-        public bool ReBuildDictionary { get; } = false;
+        private ClassHitsManager ClassHitsManager { get; } = new ClassHitsManager();
+
+        public bool ReBuildDictionary { get; } = true;
 
         public void Setup()
         {
@@ -22,11 +26,13 @@ namespace NaiveBayes
             {
                 WordDictionary = WordDictionaryManager.BuildDictionary();
                 NumClasses = NumClassesManager.BuildNumClasses();
+                classHits.Add(ClassHitsManager.BuildClassHits("atheism", WordDictionary));
             }
             else
             {
                 WordDictionary = WordDictionaryManager.LoadDictionary();
                 NumClasses = NumClassesManager.LoadNumClasses();
+                classHits.Add(ClassHitsManager.LoadClassHits("atheism"));
             }
         }
 

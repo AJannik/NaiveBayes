@@ -10,24 +10,32 @@ namespace NaiveBayes
 
         public const float c = 1f;
 
+        private int numTests = 0;
+        private int numWrong = 0;
+
         public void Classify(TestData testData, string[] classNames)
         {
             float[] results = new float[20];
             int maxIndex = 0;
-            float maxProb = -9999999999f;
+            float maxProb = -0f;
             for (int i = 0; i < results.Length; i++)
             {
                 results[i] = MathF.Log(c) + MathF.Log(Probabilities[i].ClassProbability) + WordsProbability(testData, i);
-                Console.WriteLine($"Class: {classNames[i]}; Score: {results[i]}");
-                if (maxProb < results[i])
+                //Console.WriteLine($"Class: {classNames[i]}; Score: {results[i]}");
+                if (maxProb > results[i])
                 {
                     maxProb = results[i];
                     maxIndex = i;
                 }
             }
-
+            numTests++;
             testData.Classification = classNames[maxIndex];
-            Console.WriteLine($"Real Class: {testData.RealClass}; Classified as: {testData.Classification}");
+
+            if (testData.Classification != testData.RealClass)
+            {
+                numWrong++;
+            }
+            //Console.WriteLine($"Real Class: {testData.RealClass}; Classified as: {testData.Classification}");
         }
 
         public void CalculateProbabilities(NumTrainingDataClasses numTrainingDataClasses, string[] classesName, ClassHits[] classHits)
@@ -45,6 +53,11 @@ namespace NaiveBayes
                     Probabilities[i].WordsProbabilities[j] = classHits[i].Hits[j] / (float)classHits[i].NumHits;
                 }
             }
+        }
+
+        public void PrintErrorRate()
+        {
+            Console.WriteLine($"A total of {numTests} texts were classified. {numWrong} were wrong. The Errorrate therefore is {100f * numWrong / (float)numTests}%");
         }
 
         private float WordsProbability(TestData testData, int index)

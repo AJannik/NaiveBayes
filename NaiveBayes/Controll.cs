@@ -57,6 +57,8 @@ namespace NaiveBayes
             {
                 classification.Classify(TestDataManager.TestDatas[i], classNames);
             }
+
+            classification.PrintErrorRate();
         }
 
         public void PrintDictionary()

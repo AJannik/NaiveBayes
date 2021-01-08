@@ -7,13 +7,13 @@ namespace NaiveBayes
 {
     public class TextFileReader
     {
-        public List<string> ReadFile(string filename)
+        public List<string> ReadFile(string path)
         {
             List<string> lines = new List<string>();
             try
             {
                 // Open the text file using a stream reader.
-                using (StreamReader sr = new StreamReader(filename))
+                using (StreamReader sr = new StreamReader(path))
                 {
                     // Read the stream as a string, and write the string to the console.
                     string s;

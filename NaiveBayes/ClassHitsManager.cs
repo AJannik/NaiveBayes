@@ -38,7 +38,7 @@ namespace NaiveBayes
         public ClassHits LoadClassHits(string className)
         {
             ClassHits classHits = new ClassHits();
-            if (!File.Exists(Path.Combine(Program.myPath, "res", $"{className}.json")))
+            if (!File.Exists(Path.Combine(Program.myPath, "res", "LearnedData", $"{className}.json")))
             {
                 throw new FileNotFoundException("ClassHits has to be build first");
             }
@@ -62,7 +62,7 @@ namespace NaiveBayes
                 string[] textWords = line.Split(" ");
                 foreach (string word in textWords)
                 {
-                    string newWord = word.Trim(new Char[] { ',', '*', '.', ':', ';', '-', '_', '<', '>', '!', '?' });
+                    string newWord = word.Trim(new Char[] { ',', '*', '.', ':', ';', '-', '_', '<', '>', '!', '?', '/', '\'', '(', ')' });
                     if (!newWord.Equals("") && !newWord.Contains("@"))
                     {
                         words.Add(newWord);

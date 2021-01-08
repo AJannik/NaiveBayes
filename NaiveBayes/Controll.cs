@@ -18,16 +18,16 @@ namespace NaiveBayes
 
         private ClassHitsManager ClassHitsManager { get; } = new ClassHitsManager();
 
-        private string[] classes = {"atheism", "autos", "baseball", "christian", "crypt", "electronics", "forsale", "graphics", 
+        private readonly string[] classes = {"atheism", "autos", "baseball", "christian", "crypt", "electronics", "forsale", "graphics", 
             "guns", "hockey", "macHardware", "medicine", "mideast", "motorcycles", "pcHardware", "politicsMisc", "religionMisc", "space", "windowsOS", "windowsX"};
 
-        public bool ReBuildDictionary { get; } = true;
+        public bool ReBuildDictionary { get; } = false;
 
         public void Setup()
         {
             if (ReBuildDictionary)
             {
-                WordDictionary = WordDictionaryManager.BuildDictionary();
+                WordDictionary = WordDictionaryManager.BuildDictionary(classes);
                 NumClasses = NumClassesManager.BuildNumClasses();
                 foreach (string item in classes)
                 {

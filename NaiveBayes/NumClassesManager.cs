@@ -41,7 +41,7 @@ namespace NaiveBayes
 
         public NumClasses LoadNumClasses()
         {
-            if (!File.Exists(Path.Combine(Program.myPath, "res", Filename)))
+            if (!File.Exists(Path.Combine(Program.myPath, "res", "LearnedData", Filename)))
             {
                 throw new FileNotFoundException("NumClasses has to be build first");
             }

@@ -25,6 +25,7 @@ namespace NaiveBayes
         {
             Controll controll = new Controll();
             controll.Setup();
+            controll.Classify();
         }
     }
 }

@@ -40,5 +40,25 @@ namespace NaiveBayes
 
             return lines;
         }
+
+        public List<string> SplitTextToWords(List<string> text)
+        {
+            List<string> words = new List<string>();
+
+            foreach (string line in text)
+            {
+                string[] textWords = line.Split(" ");
+                foreach (string word in textWords)
+                {
+                    string newWord = word.Trim(new Char[] { ',', '*', '.', ':', ';', '-', '_', '<', '>', '!', '?', '/', '\'', '(', ')' });
+                    if (!newWord.Equals("") && !newWord.Contains("@"))
+                    {
+                        words.Add(newWord);
+                    }
+                }
+            }
+
+            return words;
+        }
     }
 }

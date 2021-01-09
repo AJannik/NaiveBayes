@@ -11,7 +11,9 @@ namespace NaiveBayes.Learning
 
         public ClassHits BuildClassHits(string className, WordDictionary wordDictionary)
         {
-            ClassHits classHits = new ClassHits(className, wordDictionary.Words.Count);
+            ClassHits classHits = new ClassHits();
+            classHits.Name = className;
+            classHits.Hits = new int[wordDictionary.Words.Count];
 
             // Get Files
             string[] files = Directory.GetFiles(Path.Combine(Program.myPath, "res", "TrainingData", classHits.Name));

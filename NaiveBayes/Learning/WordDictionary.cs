@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace NaiveBayes
+namespace NaiveBayes.Learning
 {
     public class WordDictionary
     {

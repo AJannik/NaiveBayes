@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using NaiveBayes.Learning;
+using System;
 
-namespace NaiveBayes
+namespace NaiveBayes.Classification
 {
-    public class Classification
+    public class Classifier
     {
         private Probability[] Probabilities { get; } = new Probability[20];
 
-        public const float c = 1f;
+        public const float C = 1f;
 
         private int numTests = 0;
         private int numWrong = 0;
@@ -18,10 +17,13 @@ namespace NaiveBayes
             float[] results = new float[20];
             int maxIndex = 0;
             float maxProb = -0f;
+
+            // Naive-Bayes Classifier
             for (int i = 0; i < results.Length; i++)
             {
-                results[i] = MathF.Log(c) + MathF.Log(Probabilities[i].ClassProbability) + WordsProbability(testData, i);
-                //Console.WriteLine($"Class: {classNames[i]}; Score: {results[i]}");
+                results[i] = MathF.Log(C) + MathF.Log(Probabilities[i].ClassProbability) + WordsProbability(testData, i);
+
+                // store biggest score
                 if (maxProb > results[i])
                 {
                     maxProb = results[i];
@@ -31,23 +33,24 @@ namespace NaiveBayes
             numTests++;
             testData.Classification = classNames[maxIndex];
 
+            // Error tracking
             if (testData.Classification != testData.RealClass)
             {
                 numWrong++;
             }
-            //Console.WriteLine($"Real Class: {testData.RealClass}; Classified as: {testData.Classification}");
         }
 
+        
         public void CalculateProbabilities(NumTrainingDataClasses numTrainingDataClasses, string[] classesName, ClassHits[] classHits)
         {
             for (int i = 0; i < Probabilities.Length; i++)
             {
-                Probability probability = new Probability();
-                probability.WordsProbabilities = new float[classHits[0].Hits.Length];
-                probability.ClassName = classesName[i];
-                probability.ClassProbability = numTrainingDataClasses.NumTrainingData[i] / (float)numTrainingDataClasses.TotalNumTrainingData;
+                // calculate P(Class) for every class from absolute frequency which is stored in NumTrainingDataClasses
+                float classProb = numTrainingDataClasses.NumTrainingData[i] / (float)numTrainingDataClasses.TotalNumTrainingData;
+                Probability probability = new Probability(classesName[i], classHits[0].Hits.Length, classProb);
                 Probabilities[i] = probability;
 
+                // calculate P(w | Class) for every class from absolute frequency which is stored in ClassHits 
                 for (int j = 0; j < classHits[i].Hits.Length; j++)
                 {
                     Probabilities[i].WordsProbabilities[j] = classHits[i].Hits[j] / (float)classHits[i].NumHits;
@@ -60,6 +63,8 @@ namespace NaiveBayes
             Console.WriteLine($"A total of {numTests} texts were classified. {numWrong} were wrong. The Errorrate therefore is {100f * numWrong / (float)numTests}%");
         }
 
+        // ∑ n * Log( P(w | Class) )
+        // n := number of word occurences
         private float WordsProbability(TestData testData, int index)
         {
             float prob = 0f;

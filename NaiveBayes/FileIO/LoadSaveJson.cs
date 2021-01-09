@@ -1,7 +1,7 @@
 ﻿using System.IO;
 using System.Text.Json;
 
-namespace NaiveBayes
+namespace NaiveBayes.FileIO
 {
     public class LoadSaveJson
     {

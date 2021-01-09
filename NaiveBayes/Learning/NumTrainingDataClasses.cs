@@ -1,4 +1,4 @@
-﻿namespace NaiveBayes
+﻿namespace NaiveBayes.Learning
 {
     public class NumTrainingDataClasses
     {

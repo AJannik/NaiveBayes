@@ -1,8 +1,9 @@
-﻿using System;
+﻿using NaiveBayes.FileIO;
+using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace NaiveBayes
+namespace NaiveBayes.Learning
 {
     public class WordDictionaryManager
     {
@@ -22,7 +23,7 @@ namespace NaiveBayes
                 foreach (string file in files)
                 {
                     List<string> text = textFileReader.ReadFile(file);
-                    AddText(text, wordDictionary);
+                    FormateText(text, wordDictionary);
                 }
             }
 
@@ -47,19 +48,24 @@ namespace NaiveBayes
             loadSaveJson.Serialize(wordDictionary, Filename);
         }
 
-        private void AddText(List<string> text, WordDictionary wordDictionary)
+        private void FormateText(List<string> text, WordDictionary wordDictionary)
         {
             foreach (string line in text)
             {
                 string[] textWords = line.Split(" ");
                 foreach (string word in textWords)
                 {
-                    string newWord = word.Trim(new Char[] { ',', '*', '.', ':', ';', '-', '_', '<', '>', '!', '?', '/', '\'', '(', ')'});
-                    if (!newWord.Equals("") && !wordDictionary.Words.Contains(newWord) && !newWord.Contains("@"))
-                    {
-                        wordDictionary.Words.Add(newWord);
-                    }
+                    string newWord = word.Trim(new Char[] { ',', '*', '.', ':', ';', '-', '_', '<', '>', '!', '?', '/', '\'', '(', ')' });
+                    AddWordToDictionary(wordDictionary, newWord);
                 }
+            }
+        }
+
+        private static void AddWordToDictionary(WordDictionary wordDictionary, string newWord)
+        {
+            if (!newWord.Equals("") && !wordDictionary.Words.Contains(newWord) && !newWord.Contains("@"))
+            {
+                wordDictionary.Words.Add(newWord);
             }
         }
     }

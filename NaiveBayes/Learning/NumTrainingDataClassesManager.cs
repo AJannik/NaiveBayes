@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using NaiveBayes.FileIO;
 using System.IO;
-using System.Text;
 
-namespace NaiveBayes
+namespace NaiveBayes.Learning
 {
-    public class NumClassesManager
+    public class NumTrainingDataClassesManager
     {
         private LoadSaveJson loadSaveJson = new LoadSaveJson();
 

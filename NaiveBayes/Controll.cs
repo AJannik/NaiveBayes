@@ -1,6 +1,7 @@
-﻿using System;
+﻿using NaiveBayes.Classification;
+using NaiveBayes.Learning;
+using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace NaiveBayes
 {
@@ -14,7 +15,7 @@ namespace NaiveBayes
 
         private WordDictionaryManager WordDictionaryManager { get; } = new WordDictionaryManager();
 
-        private NumClassesManager NumClassesManager { get; } = new NumClassesManager();
+        private NumTrainingDataClassesManager NumClassesManager { get; } = new NumTrainingDataClassesManager();
 
         private ClassHitsManager ClassHitsManager { get; } = new ClassHitsManager();
 
@@ -49,16 +50,16 @@ namespace NaiveBayes
 
         public void Classify()
         {
-            Classification classification = new Classification();
+            Classifier classifier = new Classifier();
 
             TestDataManager.BuildTestDatas(WordDictionary);
-            classification.CalculateProbabilities(NumClasses, classNames, ClassHits.ToArray());
+            classifier.CalculateProbabilities(NumClasses, classNames, ClassHits.ToArray());
             for (int i = 0; i < TestDataManager.TestDatas.Count; i++)
             {
-                classification.Classify(TestDataManager.TestDatas[i], classNames);
+                classifier.Classify(TestDataManager.TestDatas[i], classNames);
             }
 
-            classification.PrintErrorRate();
+            classifier.PrintErrorRate();
         }
 
         public void PrintDictionary()
